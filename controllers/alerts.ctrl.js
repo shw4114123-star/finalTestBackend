@@ -1,4 +1,4 @@
-import { createAlertsDAL, deleteAlertsByIdDAL, getAlertsByIdDAL, getAllAlertsDAL } from "../DAL/alerts.dal.js";
+import { createAlertsDAL, deleteAlertsByIdDAL, getAlertsByIdDAL, getAllAlertsDAL, updateAlertsDAL } from "../DAL/alerts.dal.js";
 import { createError } from "../utils/errorHandler.js";
 
 export const createAlerts = async (req, res) => {
@@ -16,6 +16,14 @@ export const getAlertsById = async (req, res) => {
     const { id } = req.params;
     const alerts = await getAlertsByIdDAL(id);
     if (!alerts) throw new createError("alerts not found", 404)
+    res.json({ success: true, data: alerts })
+}
+
+export const updateAlerts = async (req, res) => {
+    const body = req.body;
+    const { id } = req.params;
+    const alerts = await updateAlertsDAL(id, body)
+    if (!alerts) throw new createError("alerts not found", 404);
     res.json({ success: true, data: alerts })
 }
 
