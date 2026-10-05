@@ -7,8 +7,8 @@ export const alertsSchema = z.object({
         priority: z.enum(["Low", "Medium", "High", "Critical"]),
         arena: z.enum(["North", "South", "Center"]),
         status: z.enum(["Active", "Handled"]),
-        lon: z.number(),
-        lat: z.number()
+        lon: z.number().min(-180).max(180),
+        lat: z.number().min(-90).max(90)
     })
 })
 
@@ -19,7 +19,7 @@ export const updateAlertsSchema = z.object({
         priority: z.enum(["Low", "Medium", "High", "Critical"]).optional(),
         arena: z.enum(["North", "South", "Center"]).optional(),
         status: z.enum(["Active", "Handled"]).optional(),
-        lon: z.number().min(-90).max(90).optional(),
-        lat: z.number().min(-180).max(180).optional()
+        lon: z.number().min(-180).max(180).optional(),
+        lat: z.number().min(-90).max(90).optional()
     })
 })
