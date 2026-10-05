@@ -2,7 +2,7 @@ import express from "express";
 import "dotenv/config";
 import helmet from "helmet";
 import cors from "cors";
-
+import "./db/db.js"
 
 const PORT = process.env.PORT;
 const app = express();
