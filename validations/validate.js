@@ -6,13 +6,14 @@ export function validate(schema){
             query: req.query
         })
         if (!result.success) {
-            const message = result.error.issuss[0].message;
+            const message = result?.error.issues[0]?.message;
             const error = new Error(message);
-            error.statusCode = 400;
+            error.status = 400;
             return next(error)
         }
         if (result.data.body) {
-            req.bodt = result.data.body
+            req.body = result.data.body
         }
+        next()
     }
 }
