@@ -1,13 +1,15 @@
 import express from "express";
-import { validate } from "../validations/validate";
-import { alertsSchema } from "../validations/alerts.schema";
+import { validate } from "../validations/validate.js";
+import { alertsSchema } from "../validations/alerts.schema.js";
+import { asyncWrapper } from "../utils/asyncWrapper.js";
+import { createAlerts, deleteAlertsById, getAlertsById, getAllAlerts } from "../controllers/alerts.ctrl.js";
 
 const router = express.Router();
 
-router.get("/")
-router.get("/:id")
-router.post("/", validate(alertsSchema), )
-router.put("/:id")
-router.delete("/:id")
+router.get("/", asyncWrapper(getAllAlerts))
+router.get("/:id", asyncWrapper(getAlertsById))
+router.post("/", validate(alertsSchema), asyncWrapper(createAlerts))
+// router.put("/:id")
+router.delete("/:id", asyncWrapper(deleteAlertsById))
 
 export default router
