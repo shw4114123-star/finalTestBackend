@@ -4,7 +4,7 @@ import { createError } from "../utils/errorHandler.js";
 export const createAlerts = async (req, res) => {
     const { displayName, description, priority, arena, status, lon, lat } = req.body;
     const alerts = await createAlertsDAL(displayName, description, priority, arena, status, lon, lat);
-    res.status(201).json({ success: true, message: alerts })
+    res.status(201).json({ success: true, data: alerts })
 }
 
 export const getAllAlerts = async (_req, res) => {

@@ -12,7 +12,7 @@ app.use(helmet());
 app.use(express.json());
 app.use(cors());
 app.use("/api/alerts", alertsRouter)
-
+app.use("/api/alerts", userRouter)
 app.use(errorHandler)
 
 app.listen(PORT, ()=>{
