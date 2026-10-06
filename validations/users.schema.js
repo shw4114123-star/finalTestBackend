@@ -10,3 +10,10 @@ export const usersSchema = z.object({
         assignedArena: z.enum(["North", "South", "Center", "All"])
     })
 })
+
+export const loginUserSchema = z.object({
+    body: z.object({
+        email: z.string().email(),
+        password: z.string().min(5, "password must be minimum 5 characters")
+    })
+})

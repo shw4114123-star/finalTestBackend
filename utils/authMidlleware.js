@@ -1,9 +1,9 @@
-import { createError } from "./errorHandler"
-import { verifyToken } from "./generateToken";
+import { createError } from "./errorHandler.js"
+import { verifyToken } from "./generateToken.js";
 
 
 export const authMidlleware = (async (req, _res, next) => {
-    const { authorization } = req.haeder
+    const { authorization } = req.headers
     if (!authorization) throw new createError("mising requair", 401)
     const token = authorization.split("Bearer ")[1];
     if (!token) throw new createError("mising requair", 401);

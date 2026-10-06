@@ -1,15 +1,16 @@
 import express from "express"
 import { validate } from "../validations/validate.js"
-import { usersSchema } from "../validations/users.schema.js"
+import { loginUserSchema, usersSchema } from "../validations/users.schema.js"
 import { asyncWrapper } from "../utils/asyncWrapper.js"
-import { createUser } from "../controllers/users.ctrl.js"
+import { createUser, daleteUser, loginUser } from "../controllers/users.ctrl.js"
+import { authMidlleware } from "../utils/authMidlleware.js"
 
 const router = express.Router()
 
 router.post("/register", validate(usersSchema), asyncWrapper(createUser))
-// router.post("/login")
-// router.get("/me")
+router.post("/login", validate(loginUserSchema), asyncWrapper(loginUser))
+// router.get("/me", asyncWrapper(getUserById))
 // router.get("/")
-// router.delete("/:id")
+router.delete("/users/:id", authMidlleware, asyncWrapper(daleteUser))
 
 export default router
