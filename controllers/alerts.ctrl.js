@@ -30,6 +30,6 @@ export const updateAlerts = async (req, res) => {
 export const deleteAlertsById = async (req, res) => {
     const { id } = req.params;
     const alerts = await deleteAlertsByIdDAL(id);
-    if (alerts.deletedCount === 0) throw new createError("alerts not found", 404)
+    if (!alerts || alerts.deletedCount === 0) throw new createError("alerts not found", 404)
     res.json({ success: true, data: alerts })
 }
