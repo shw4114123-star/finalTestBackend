@@ -1,4 +1,10 @@
-import { createUserDAL, deleteUserByIdDAL, getUserByEmailDAL, getUserByIdDAL } from "../DAL/users.dal.js";
+import {
+    createUserDAL,
+    deleteUserByIdDAL,
+    getAllUsersDAL, 
+    getUserByEmailDAL, 
+    getUserByIdDAL
+} from "../DAL/users.dal.js";
 import { comparePassword, passwordHash } from "../utils/bcryptPassword.js";
 import { createError } from "../utils/errorHandler.js"
 import { genToken } from "../utils/generateToken.js";
@@ -23,12 +29,28 @@ export const loginUser = async (req, res) => {
     res.json({ success: true, data: { ...existsUser, token } })
 }
 
+export const getUserById = async (req, res) => {
+    const { userId } = req.userId
+    const user = await getUserByIdDAL(userId)
+    if (!user) throw new createError("not found the user of this token", 404)
+    res.json({ seccess: true, deta: user })
+}
+
+export const getAllUsers = async (req, res) => {
+    const { userId } = req.userId
+    const user = await getUserByIdDAL(userId)
+    if (!user) throw new createError("not found the user of this token", 404)
+    const users = await getAllUsersDAL()
+    res.json({ success: true, data: users })
+}
+
 export const daleteUser = async (req, res) => {
     const { userId } = req.userId
     const { id } = req.params
     const user = await getUserByIdDAL(userId)
-    if (user.role !== "admin") throw new createError("You do not have sufficient permissions",400);
+    if (!user) throw new createError("not found the user of this token", 404)
+    if (user.role !== "admin") throw new createError("You do not have sufficient permissions", 400);
     const userDelete = await deleteUserByIdDAL(id)
     if (userDelete.deleteCount === 0) throw new createError("user not found", 404)
-    res.json({success: true, dataDelete: userDelete})
+    res.json({ success: true, dataDelete: userDelete })
 }

@@ -20,6 +20,11 @@ export async function getUserByIdDAL(id) {
     return res
 }
 
+export async function getAllUsersDAL() {
+    const res = await users.find().toArray();
+    return res
+}
+
 export async function deleteUserByIdDAL(id) {
     const res = await users.findOneAndDelete({_id: new ObjectId(id)})
     return res
